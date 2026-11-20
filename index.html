@@ -113,9 +113,12 @@
         <button onclick="switchTab('teacher')" data-tab="teacher" class="nav-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
           <span>👩‍🏫</span> Багшийн самбар
         </button>
+        <button id="desktopAdminNavBtn" onclick="switchTab('admin')" data-tab="admin" class="nav-tab-btn hidden px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 text-amber-700 dark:text-amber-300">
+          <span>🛡️</span> Админ самбар
+        </button>
       </nav>
 
-      <!-- Right Controls: Language, Sound, Theme, Teacher Auth -->
+      <!-- Right Controls: Language, Sound, Theme, Teacher/Admin Auth -->
       <div class="flex items-center gap-2">
         <!-- Global Language Pill -->
         <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700">
@@ -144,10 +147,11 @@
         </button>
 
         <!-- Teacher Auth Button / Logged-in Badge -->
+        <!-- Teacher / Admin Auth Button / Logged-in Badge -->
         <div id="teacherHeaderAuthArea" class="flex items-center">
           <button onclick="openTeacherAuthModal('login')" class="px-3 py-1.5 rounded-xl text-xs font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-500/20 transition-all flex items-center gap-1.5">
             <span>👩‍🏫</span>
-            <span>Багш нэвтрэх</span>
+            <span>Багш / Админ нэвтрэх</span>
           </button>
         </div>
       </div>
@@ -174,11 +178,14 @@
         <button onclick="switchTab('teacher')" data-tab="teacher" class="nav-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
           <span>👩‍🏫</span> Багшийн самбар
         </button>
+        <button id="mobileAdminNavBtn" onclick="switchTab('admin')" data-tab="admin" class="nav-tab-btn hidden px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1 text-amber-700 dark:text-amber-300">
+          <span>🛡️</span> Админ самбар
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Sub-Header: Smart MN Keyboard Toggle, Live Cloud Status & Student Class Join -->
+  <!-- Sub-Header: Smart MN Keyboard Toggle & Student Class Join -->
   <div class="bg-indigo-50/90 dark:bg-indigo-950/50 border-b border-indigo-100 dark:border-indigo-900/60 py-2 px-4">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
       <!-- Smart MN Keyboard Auto-Mapper Button -->
@@ -192,12 +199,8 @@
         </span>
       </div>
 
-      <!-- Right: Live Firebase Cloud Status + Student Class Join -->
+      <!-- Right: Student Class Join -->
       <div class="flex flex-wrap items-center gap-2">
-        <button id="dbConnectionStatusBtn" onclick="openDbConfigModal()" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-50 dark:bg-amber-950/70 text-amber-800 dark:text-amber-200 border border-amber-200 dark:border-amber-800 shadow-2xs transition-all flex items-center gap-1.5" title="Firebase өгөгдлийн сангийн төлөв">
-          <span>🟡 Холбогдож байна...</span>
-        </button>
-
         <div id="studentClassStatusArea" class="flex items-center gap-2">
           <button onclick="openStudentJoinModal()" class="px-3 py-1 rounded-lg text-xs font-extrabold bg-white dark:bg-slate-900 hover:bg-emerald-50 dark:hover:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 shadow-2xs transition-all flex items-center gap-1.5">
             <span>🎓</span>
@@ -897,17 +900,247 @@
       </div>
     </section>
 
+    <!-- ========================================================= -->
+    <!-- TAB 7: SUPER ADMIN DASHBOARD (🛡️ АДМИН САМБАР)            -->
+    <!-- ========================================================= -->
+    <section id="view-admin" class="view-section hidden space-y-6">
+      <!-- Admin Header Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-5 sm:p-6 rounded-3xl border border-amber-500/40 shadow-lg space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center text-2xl font-black shadow-md shrink-0">
+              🛡️
+            </div>
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h1 class="text-lg sm:text-xl font-black tracking-tight">Супер Админ Удирдлагын Самбар</h1>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-black bg-amber-400 text-slate-950">
+                  SUPER ADMIN
+                </span>
+              </div>
+              <p id="adminHeaderEmailSubtitle" class="text-xs text-slate-300 mt-0.5">
+                narankhuu.bdl@gmail.com • Платформын нэгдсэн хяналт
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="dbConnectionStatusBtn" onclick="openDbConfigModal()" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-emerald-500/20 text-emerald-200 border border-emerald-400/40 hover:bg-emerald-500/30 transition-all flex items-center gap-1.5">
+              <span>🟢 Cloud холбогдсон (nb-typing)</span>
+            </button>
+            <button onclick="refreshAdminDashboardData(true)" class="px-4 py-2 rounded-xl text-xs font-extrabold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-sm transition-all flex items-center gap-1.5">
+              <span>🔄</span> Шинэчлэх
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Admin Sub-Tabs -->
+        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-white/10">
+          <button onclick="switchAdminSubTab('stats')" data-asub="stats" class="asub-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center gap-1.5">
+            <span>📊</span> Нэгдсэн статистик
+          </button>
+          <button onclick="switchAdminSubTab('lessons')" data-asub="lessons" class="asub-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center gap-1.5">
+            <span>📚</span> Нийтийн хичээл удирдах
+          </button>
+          <button onclick="switchAdminSubTab('classes')" data-asub="classes" class="asub-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center gap-1.5">
+            <span>🏫</span> Бүх анги ба Багш нар
+          </button>
+          <button onclick="switchAdminSubTab('logs')" data-asub="logs" class="asub-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center gap-1.5">
+            <span>🎓</span> Бүх сурагчдын гүйцэтгэл
+          </button>
+        </div>
+      </div>
+
+      <!-- ADMIN SUB-TAB 1: UNIFIED PLATFORM STATS -->
+      <div id="adminSub-stats" class="space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="text-xs font-bold text-slate-500 dark:text-slate-400">Нийт бүртгэлтэй багш / хэрэглэгч</div>
+            <div id="adminStatUsersCount" class="font-mono text-3xl font-black text-indigo-600 dark:text-indigo-400 mt-1">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">Firestore `users` сан</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="text-xs font-bold text-slate-500 dark:text-slate-400">Нийт үүссэн анги</div>
+            <div id="adminStatClassesCount" class="font-mono text-3xl font-black text-violet-600 dark:text-violet-400 mt-1">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">Firestore `classes` сан</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="text-xs font-bold text-slate-500 dark:text-slate-400">Нийт элссэн сурагчид</div>
+            <div id="adminStatStudentsCount" class="font-mono text-3xl font-black text-emerald-600 dark:text-emerald-400 mt-1">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">Бүх ангийн нийлбэр дүн</div>
+          </div>
+          <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="text-xs font-bold text-slate-500 dark:text-slate-400">Нийт шивэлтийн оролдлого</div>
+            <div id="adminStatLogsCount" class="font-mono text-3xl font-black text-amber-600 dark:text-amber-400 mt-1">0</div>
+            <div class="text-[11px] text-slate-400 mt-1">Firestore `student_logs` сан</div>
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <h2 class="text-base font-extrabold text-slate-900 dark:text-white">🗄️ Өгөгдлийн сан ба Системийн төлөв</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Идэвхтэй төсөл: <strong class="font-mono text-indigo-600 dark:text-indigo-400">nb-typing</strong> • Нийтийн үүлэн хичээлийн тоо: <strong id="adminStatGlobalLessonsCount" class="font-mono">0</strong>
+            </p>
+          </div>
+          <button onclick="openDbConfigModal()" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-colors shrink-0">
+            ⚙️ Өгөгдлийн сангийн оношилгоо
+          </button>
+        </div>
+      </div>
+
+      <!-- ADMIN SUB-TAB 2: GLOBAL LESSONS MANAGER -->
+      <div id="adminSub-lessons" class="hidden space-y-6">
+        <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border-2 border-amber-300/70 dark:border-amber-800/70 shadow-sm space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div>
+              <h2 id="adminGlobalLessonFormHeading" class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">
+                🌍 Нийтийн хичээл нэмэх / засах (Бүх хэрэглэгчдэд харагдана)
+              </h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400">
+                Энд нийтэлсэн хичээлүүд Firestore <code class="font-mono text-indigo-600">global_lessons</code> санд хадгалагдаж, сайтад орсон бүх зочин ба сурагчдад автоматаар ачаалагдана.
+              </p>
+            </div>
+            <button onclick="publishAllDefaultLessonsToGlobal()" class="px-4 py-2 rounded-xl text-xs font-extrabold bg-amber-500 hover:bg-amber-600 text-white shadow-sm shrink-0 transition-colors">
+              ☁️ Бүх үндсэн хичээлийг үүлэн санд нийтлэх
+            </button>
+          </div>
+
+          <input type="hidden" id="adminEditGlobalLessonId" value="" />
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Хичээлийн нэр *</label>
+              <input id="adminGLTitle" type="text" placeholder="Жишээ: 9-р хичээл: Монгол зүйр цэцэн үгс"
+                class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Хэл</label>
+              <select id="adminGLLang" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-semibold">
+                <option value="MN">🇲🇳 Монгол (MN)</option>
+                <option value="EN">🇺🇸 Англи (EN)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Түвшин &amp; Зорилтот WPM</label>
+              <div class="flex gap-2">
+                <select id="adminGLLevel" class="flex-1 px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-bold">
+                  <option value="Анхан">Анхан</option>
+                  <option value="Дунд">Дунд</option>
+                  <option value="Ахисан">Ахисан</option>
+                </select>
+                <input id="adminGLTargetWpm" type="number" min="5" max="150" value="25"
+                  class="w-20 px-2.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs font-bold" />
+              </div>
+            </div>
+            <div class="sm:col-span-2 lg:col-span-4">
+              <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Төвлөрөх товчнууд</label>
+              <input id="adminGLFocus" type="text" placeholder="Жишээ: ө, р, а, о, э, н"
+                class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs" />
+            </div>
+            <div class="sm:col-span-2 lg:col-span-4">
+              <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Дасгалын эх бичвэр *</label>
+              <textarea id="adminGLText" rows="3" placeholder="Бүх суралцагчдын шивэх дасгалын текстийг энд бичнэ үү..."
+                class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-sm"></textarea>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-2">
+            <button id="adminCancelEditGLBtn" onclick="clearAdminGlobalLessonForm()" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              Засахыг болих
+            </button>
+            <button onclick="saveAdminGlobalLesson()" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm">
+              🌍 Нийтийн санд хадгалах
+            </button>
+          </div>
+        </div>
+
+        <!-- Global Lessons List -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <h3 class="font-extrabold text-base text-slate-900 dark:text-white">
+              Үүлэн санд нийтлэгдсэн хичээлүүд (<span id="adminGlobalLessonsListCount">0</span>)
+            </h3>
+          </div>
+          <div id="adminGlobalLessonsListContainer" class="divide-y divide-slate-100 dark:divide-slate-800">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN SUB-TAB 3: ALL CLASSES & TEACHERS -->
+      <div id="adminSub-classes" class="hidden bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">🏫 Платформын бүх анги ба Багш нар</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Бүх багш нарын үүсгэсэн ангиуд болон сурагчдын тоог хянах</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <th class="py-3 px-4">Ангийн нэр</th>
+                <th class="py-3 px-4">Ангийн код</th>
+                <th class="py-3 px-4">Багш / Сургууль</th>
+                <th class="py-3 px-4">Сурагчийн тоо</th>
+                <th class="py-3 px-4">Үүсгэсэн огноо</th>
+                <th class="py-3 px-4 text-right">Үйлдэл</th>
+              </tr>
+            </thead>
+            <tbody id="adminAllClassesTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ADMIN SUB-TAB 4: ALL STUDENT ACTIVITY LOGS -->
+      <div id="adminSub-logs" class="hidden bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">🎓 Бүх сурагчдын сүүлийн 50 гүйцэтгэл</h2>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Нийт сурагчдын хичээл болон хурдны сорилын үр дүн</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <input id="adminLogsSearchInput" type="text" oninput="renderAdminAllLogsView()" placeholder="Сурагч, ангийн код хайх..."
+              class="px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <button onclick="exportAllStudentLogsCsv()" class="px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm shrink-0">
+              📊 Бүх дүнг татах (.CSV)
+            </button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 dark:bg-slate-800/70 border-b border-slate-200 dark:border-slate-800 text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                <th class="py-3 px-4">Сурагчийн нэр</th>
+                <th class="py-3 px-4">Анги</th>
+                <th class="py-3 px-4">Хичээл / Сорил</th>
+                <th class="py-3 px-4">Хурд (WPM)</th>
+                <th class="py-3 px-4">Нарийвчлал</th>
+                <th class="py-3 px-4">Огноо</th>
+              </tr>
+            </thead>
+            <tbody id="adminAllLogsTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+              <!-- Populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- ==================== MODAL 1: TEACHER AUTH (QUICK / EMAIL / GOOGLE) ==================== -->
+  <!-- ==================== MODAL 1: TEACHER / ADMIN AUTH ==================== -->
   <div id="teacherAuthModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
       <div class="p-5 sm:p-6 bg-gradient-to-r from-indigo-600 to-violet-600 text-white flex items-center justify-between">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">👩‍🏫</div>
           <div>
-            <h2 class="text-lg font-extrabold">Багшийн нэвтрэх хэсэг</h2>
-            <p class="text-xs text-indigo-100">Бичье.mn • Мэдээлэл зүйн багшийн студи</p>
+            <h2 class="text-lg font-extrabold">Багш / Админ нэвтрэх</h2>
+            <p class="text-xs text-indigo-100">Бичье.mn • Багш ба Админы удирдлагын хэсэг</p>
           </div>
         </div>
         <button onclick="closeTeacherAuthModal()" class="w-8 h-8 rounded-lg bg-white/15 hover:bg-white/25 flex items-center justify-center text-white font-bold transition-colors">
@@ -915,26 +1148,26 @@
         </button>
       </div>
 
-      <div class="p-5 sm:p-6 space-y-5 max-h-[82vh] overflow-y-auto">
-        <!-- Quick 1-Click Teacher Login -->
-        <div class="p-4 rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/70 space-y-3">
-          <div class="text-xs font-extrabold text-amber-800 dark:text-amber-300">
-            ⚡ ШУУРХАЙ БАГШААР НЭВТРЭХ (НЭГ ТОВШИЛТ)
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <input id="demoTeacherNameInput" type="text" value="Н. Наранхүү" placeholder="Багшийн нэр"
-              class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-500" />
-            <input id="demoTeacherSchoolInput" type="text" value="ЕБС" placeholder="Сургуулийн нэр"
-              class="px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-800 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-amber-500" />
-          </div>
-          <button onclick="quickDemoTeacherLogin()" class="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold bg-amber-500 hover:bg-amber-600 text-white shadow-sm transition-all">
-            ⚡ Шуурхай багшаар нэвтрэх (Нэг товшилт)
-          </button>
+      <div class="p-5 sm:p-6 space-y-4 max-h-[82vh] overflow-y-auto">
+        <!-- Admin Note Banner -->
+        <div class="p-3 rounded-2xl bg-indigo-50/90 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 text-xs text-indigo-900 dark:text-indigo-200">
+          🛡️ <strong>Админ эрх:</strong> <span class="font-mono font-bold">narankhuu.bdl@gmail.com</span> хаягаар <strong>Google</strong>-ээр нэвтрэх эсвэл <strong>Бүртгүүлэх</strong> табаар бүртгэл үүсгэхэд Админ самбар автоматаар нээгдэнэ.
         </div>
+
+        <!-- Google Sign In Button -->
+        <button type="button" onclick="signInTeacherWithGoogle()" class="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border-2 border-slate-300 dark:border-slate-700 shadow-2xs transition-colors flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.5H12v4.8h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
+            <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 12.3s.6 3.3 1.6 5.3l3.7-2.8z"/>
+            <path fill="#34A853" d="M12 23.6c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8c1.9 3.9 5.8 6.9 10.4 6.9z"/>
+          </svg>
+          <span>Google бүртгэлээр нэвтрэх</span>
+        </button>
 
         <div class="relative flex items-center justify-center">
           <div class="border-t border-slate-200 dark:border-slate-800 w-full"></div>
-          <span class="bg-white dark:bg-slate-900 px-3 text-[11px] font-bold uppercase text-slate-400">эсвэл И-мэйл / Google</span>
+          <span class="bg-white dark:bg-slate-900 px-3 text-[11px] font-bold uppercase text-slate-400">эсвэл И-мэйл хаягаар</span>
           <div class="border-t border-slate-200 dark:border-slate-800 w-full"></div>
         </div>
 
@@ -952,25 +1185,25 @@
         <form onsubmit="submitTeacherEmailAuth(event)" class="space-y-3">
           <div id="registerExtraFields" class="hidden space-y-3">
             <div>
-              <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Багшийн овог, нэр *</label>
-              <input id="authTeacherName" type="text" placeholder="Жишээ: Д. Оюунбилэг"
+              <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Овог, нэр *</label>
+              <input id="authTeacherName" type="text" placeholder="Жишээ: Н. Наранхүү"
                 class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Сургууль / Байгууллага</label>
-              <input id="authTeacherSchool" type="text" placeholder="Жишээ: Шинэ Монгол сургууль"
+              <input id="authTeacherSchool" type="text" placeholder="Жишээ: ЕБС / Мэдээлэл зүй"
                 class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             </div>
           </div>
 
           <div>
             <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">И-мэйл хаяг *</label>
-            <input id="authTeacherEmail" type="email" required placeholder="bagsh@school.edu.mn"
+            <input id="authTeacherEmail" type="email" required placeholder="narankhuu.bdl@gmail.com"
               class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Нууц үг *</label>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Нууц үг (хамгийн багадаа 6 тэмдэгт) *</label>
             <input id="authTeacherPassword" type="password" required minlength="6" placeholder="••••••••"
               class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
           </div>
@@ -980,16 +1213,15 @@
           </button>
         </form>
 
-        <!-- Google Sign In Button -->
-        <button type="button" onclick="signInTeacherWithGoogle()" class="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 transition-colors flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24">
-            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
-            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.7-.2-2.5H12v4.8h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/>
-            <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 12.3s.6 3.3 1.6 5.3l3.7-2.8z"/>
-            <path fill="#34A853" d="M12 23.6c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8c1.9 3.9 5.8 6.9 10.4 6.9z"/>
-          </svg>
-          <span>Google бүртгэлээр нэвтрэх</span>
-        </button>
+        <!-- Quick Demo Login -->
+        <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+          <input id="demoTeacherNameInput" type="hidden" value="Багш" />
+          <input id="demoTeacherSchoolInput" type="hidden" value="ЕБС" />
+          <span class="text-[11px] text-slate-400">Бүртгэлгүй турших бол:</span>
+          <button type="button" onclick="quickDemoTeacherLogin()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+            ⚡ Туршилтын багш
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -997,15 +1229,15 @@
   <!-- ==================== MODAL 2: STUDENT JOIN CLASS ==================== -->
   <div id="studentJoinModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-      <div class="p-5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white flex items-center justify-between">
+      <div class="p-5 sm:p-6 bg-gradient-to-r from-emerald-600 to-teal-600 text-white flex items-center justify-between">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">🎓</div>
           <div>
             <h2 class="text-lg font-extrabold">Багшийн ангид нэгдэх</h2>
-            <p class="text-xs text-emerald-100">Таны хурд ба дүн багшийн самбарт шууд бүртгэгдэнэ</p>
+            <p class="text-xs text-emerald-100">Хичээл, сорилын дүн тань багшид шууд харагдана</p>
           </div>
         </div>
-        <button onclick="closeStudentJoinModal()" class="w-8 h-8 rounded-lg bg-white/15 hover:bg-white/25 flex items-center justify-center text-white font-bold">
+        <button onclick="closeStudentJoinModal()" class="w-8 h-8 rounded-lg bg-white/15 hover:bg-white/25 flex items-center justify-center text-white font-bold transition-colors">
           ✕
         </button>
       </div>
@@ -1013,41 +1245,41 @@
       <form onsubmit="submitStudentJoinClass(event)" class="p-5 sm:p-6 space-y-4">
         <div>
           <label for="studentJoinNameInput" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Сурагчийн овог, нэр *</label>
-          <input id="studentJoinNameInput" type="text" required placeholder="Жишээ: Бат-Оргил Энхжин"
+          <input id="studentJoinNameInput" type="text" required placeholder="Жишээ: Б. Тэмүүлэн"
             class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" />
         </div>
 
         <div>
-          <label for="studentJoinCodeInput" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Ангийн код (Багшаас авсан 6 тэмдэгт) *</label>
-          <input id="studentJoinCodeInput" type="text" required placeholder="Жишээ: BCH-492" maxlength="10"
-            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono uppercase text-base font-extrabold tracking-wider focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          <label for="studentJoinCodeInput" class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Багшийн өгсөн ангийн код *</label>
+          <input id="studentJoinCodeInput" type="text" required placeholder="Жишээ: BCH-492"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-sm font-extrabold uppercase focus:outline-none focus:ring-2 focus:ring-emerald-500" />
         </div>
 
-        <div id="availableLocalClassesHint" class="hidden text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/70 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
-          <!-- Shows quick hint if classes exist -->
+        <div id="availableLocalClassesHint" class="hidden p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs">
+          <!-- Active classes populated dynamically -->
         </div>
 
         <div class="flex items-center justify-end gap-2 pt-2">
-          <button type="button" onclick="closeStudentJoinModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+          <button type="button" onclick="closeStudentJoinModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">
             Болих
           </button>
-          <button type="submit" class="px-6 py-2.5 rounded-xl text-sm font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-500/20 transition-all">
-            ✓ Ангид нэгдэх
+          <button type="submit" class="px-5 py-2.5 rounded-xl text-sm font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-500/20">
+            ✅ Ангид нэгдэх
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ==================== MODAL 3: DATABASE INFO & DIAGNOSTICS ==================== -->
+  <!-- ==================== MODAL 3: DATABASE DIAGNOSTICS & CONFIG ==================== -->
   <div id="dbConfigModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-      <div class="p-5 bg-gradient-to-r from-slate-800 to-indigo-900 text-white flex items-center justify-between">
+      <div class="p-5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white flex items-center justify-between">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-xl">🗄️</div>
           <div>
-            <h2 class="text-lg font-extrabold">Өгөгдлийн сангийн төлөв &amp; Тохиргоо</h2>
-            <p class="text-xs text-slate-300">Firebase Firestore • Cloud синхрончлол</p>
+            <h2 class="text-lg font-extrabold">Өгөгдлийн сангийн оношилгоо</h2>
+            <p class="text-xs text-slate-300">Firebase Firestore үүлэн холболтын төлөв</p>
           </div>
         </div>
         <button onclick="closeDbConfigModal()" class="w-8 h-8 rounded-lg bg-white/15 hover:bg-white/25 flex items-center justify-center text-white font-bold">
@@ -1055,64 +1287,43 @@
         </button>
       </div>
 
-      <div class="p-5 sm:p-6 space-y-4 max-h-[82vh] overflow-y-auto">
-        <!-- Live Connection Status Banner -->
+      <div class="p-5 sm:p-6 space-y-4 max-h-[80vh] overflow-y-auto text-xs">
         <div id="dbModalStatusBanner" class="p-4 rounded-2xl border flex items-center justify-between gap-3 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800">
-          <div class="text-xs">
+          <div>
             <div id="dbModalStatusTitle" class="font-extrabold text-emerald-900 dark:text-emerald-200">🟢 Cloud холбогдсон (nb-typing)</div>
-            <div id="dbModalStatusDesc" class="text-emerald-700 dark:text-emerald-300 mt-0.5">Firestore өгөгдлийн сан бодит цагаар ажиллаж байна.</div>
+            <div id="dbModalStatusDesc" class="text-emerald-700 dark:text-emerald-300 mt-0.5">Өгөгдлийн сан хэвийн ажиллаж байна.</div>
           </div>
-          <button onclick="syncAllLocalToCloud()" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shrink-0 transition-colors">
-            🔄 Синк хийх
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <div class="text-[11px] font-bold text-slate-400">Төслийн ID</div>
+            <div id="diagProjectIdVal" class="font-mono font-extrabold text-slate-900 dark:text-white mt-0.5">nb-typing</div>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <div class="text-[11px] font-bold text-slate-400">Нэвтрэлтийн төлөв</div>
+            <div id="diagAuthStatusVal" class="font-mono font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">Бэлэн</div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="syncAllLocalToCloud()" class="px-4 py-2 rounded-xl font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm">
+            ☁️ Локал өгөгдлийг Cloud руу синк хийх
           </button>
         </div>
 
-        <!-- Diagnostics Details -->
-        <div class="grid grid-cols-2 gap-3 text-xs">
-          <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
-            <div class="text-slate-400 font-bold">ИДЭВХТЭЙ PROJECT ID</div>
-            <div id="diagProjectIdVal" class="font-mono font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">nb-typing</div>
+        <div class="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
+          <label for="customFirebaseConfigInput" class="block font-bold text-slate-700 dark:text-slate-300">Өөр Firebase Config JSON холбох (сонголтоор)</label>
+          <textarea id="customFirebaseConfigInput" rows="4" placeholder='{"apiKey": "...", "projectId": "..."}'
+            class="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs"></textarea>
+          <div class="flex items-center justify-end gap-2">
+            <button type="button" onclick="clearCustomFirebaseConfig()" class="px-3 py-2 rounded-xl font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              Анхны тохиргоо сэргээх
+            </button>
+            <button type="button" onclick="saveAndConnectCustomFirebase()" class="px-4 py-2 rounded-xl font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white">
+              Хадгалах ба Холбох
+            </button>
           </div>
-          <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700">
-            <div class="text-slate-400 font-bold">AUTH / ХОЛБОЛТ</div>
-            <div id="diagAuthStatusVal" class="font-mono font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">Идэвхтэй</div>
-          </div>
-        </div>
-
-        <!-- Collection Architecture Overview -->
-        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 space-y-1.5 text-xs">
-          <div class="font-extrabold text-slate-700 dark:text-slate-200">📂 Firestore өгөгдлийн сангийн бүтэц:</div>
-          <div class="font-mono text-[11px] text-slate-600 dark:text-slate-300 space-y-1">
-            <div>• <span class="text-indigo-600 dark:text-indigo-400 font-bold">classes/{code}</span> — Ангийн код, багшийн хичээл ба сурагчдын дүн</div>
-            <div>• <span class="text-indigo-600 dark:text-indigo-400 font-bold">student_logs/{id}</span> — Сурагч бүрийн хичээл ба сорилын түүх</div>
-            <div>• <span class="text-indigo-600 dark:text-indigo-400 font-bold">users/{uid}</span> — Багшийн профайл ба хувийн хичээлийн сан</div>
-          </div>
-        </div>
-
-        <!-- Optional Custom Config Override -->
-        <details class="text-xs border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5">
-          <summary class="font-bold text-slate-600 dark:text-slate-300 cursor-pointer">
-            ⚙️ Өөр Firebase төслийн тохиргоо оруулах (Нэмэлт)
-          </summary>
-          <div class="mt-3 space-y-2.5">
-            <textarea id="customFirebaseConfigInput" rows="4"
-              placeholder='{"apiKey": "...", "authDomain": "...", "projectId": "..."}'
-              class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"></textarea>
-            <div class="flex items-center justify-end gap-2">
-              <button type="button" onclick="clearCustomFirebaseConfig()" class="px-3 py-1.5 rounded-xl font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                Анхны (nb-typing) сэргээх
-              </button>
-              <button type="button" onclick="saveAndConnectCustomFirebase()" class="px-4 py-1.5 rounded-xl font-extrabold bg-indigo-600 text-white">
-                Хадгалах
-              </button>
-            </div>
-          </div>
-        </details>
-
-        <div class="flex justify-end">
-          <button type="button" onclick="closeDbConfigModal()" class="px-5 py-2 rounded-xl text-xs font-extrabold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
-            Хаах
-          </button>
         </div>
       </div>
     </div>
@@ -1148,16 +1359,35 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL 5: ADMIN CLASS STUDENTS INSPECTOR ==================== -->
+  <div id="adminClassInspectModal" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+      <div class="p-5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white flex items-center justify-between">
+        <div>
+          <h2 id="adminInspectClassTitle" class="text-lg font-extrabold">Ангийн сурагчдын жагсаалт</h2>
+          <p id="adminInspectClassSub" class="text-xs text-slate-300">Багшийн ангид бүртгэлтэй сурагчдын дүн</p>
+        </div>
+        <button onclick="closeAdminClassInspectModal()" class="w-8 h-8 rounded-lg bg-white/15 hover:bg-white/25 flex items-center justify-center text-white font-bold">
+          ✕
+        </button>
+      </div>
+      <div class="p-5 sm:p-6 max-h-[75vh] overflow-y-auto">
+        <div id="adminInspectStudentsList" class="divide-y divide-slate-100 dark:divide-slate-800 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Hidden Input for Mobile/Tablet Virtual Keyboard Support -->
-  <input id="hiddenMobileInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-    class="fixed opacity-0 pointer-events-none w-1 h-1 -z-10" aria-hidden="true" />
+  <input id="hiddenMobileInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-hidden="true" class="fixed -top-24 left-0 opacity-0 pointer-events-none" />
 
   <!-- Toast Notification Container -->
-  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <div id="toastContainer" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-  <!-- ==================== FIREBASE JS SDK v10.14.1 MODULE ==================== -->
+  <!-- ==================== FIREBASE JS SDK v10.12.2 MODULE ==================== -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
       getAuth,
       signInAnonymously,
@@ -1168,19 +1398,20 @@
       onAuthStateChanged,
       signOut,
       updateProfile
-    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import {
       getFirestore,
       doc,
       getDoc,
+      getDocs,
       setDoc,
       deleteDoc,
       onSnapshot,
       collection
-    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // Exact pre-installed Firebase project configuration (nb-typing / ict_typing)
-    const DEFAULT_FIREBASE_CONFIG = {
+    // Exact pre-installed Firebase project configuration (nb-typing)
+    const defaultFirebaseConfig = {
       apiKey: "AIzaSyDOh5e1qKT4yKS5zjDiaajUyLgYGNskm4A",
       authDomain: "nb-typing.firebaseapp.com",
       projectId: "nb-typing",
@@ -1198,10 +1429,11 @@
       auth: null,
       db: null,
       user: null,
-      projectId: DEFAULT_FIREBASE_CONFIG.projectId,
+      projectId: defaultFirebaseConfig.projectId,
       lastError: null,
       unsubClasses: null,
       unsubLogs: null,
+      unsubGlobalLessons: null,
       unsubStudentClass: null,
 
       getEffectiveConfig() {
@@ -1214,7 +1446,7 @@
             }
           }
         } catch (e) {}
-        return DEFAULT_FIREBASE_CONFIG;
+        return defaultFirebaseConfig;
       },
 
       async init() {
@@ -1226,7 +1458,6 @@
           this.auth = getAuth(this.app);
           this.db = getFirestore(this.app);
 
-          // Listen to auth changes & sign in anonymously by default so Firestore rules with auth work immediately
           onAuthStateChanged(this.auth, async (user) => {
             this.user = user;
             if (!user) return;
@@ -1237,6 +1468,7 @@
               window.updateDbConnectionStatusUI();
             }
 
+            this.subscribeGlobalLessons();
             this.subscribeClasses();
             this.subscribeStudentLogs();
 
@@ -1250,6 +1482,9 @@
           } else {
             this.user = this.auth.currentUser;
             this.enabled = true;
+            this.subscribeGlobalLessons();
+            this.subscribeClasses();
+            this.subscribeStudentLogs();
             if (typeof window.updateDbConnectionStatusUI === 'function') {
               window.updateDbConnectionStatusUI();
             }
@@ -1257,9 +1492,9 @@
         } catch (err) {
           console.warn('Firebase init fallback to localStorage:', err);
           this.lastError = err?.message || 'Offline / Auth restriction';
-          // Even if anonymous auth is disabled in console, Firestore with open rules can still be used
           if (this.db) {
             this.enabled = true;
+            this.subscribeGlobalLessons();
             this.subscribeClasses();
             this.subscribeStudentLogs();
           } else {
@@ -1269,6 +1504,69 @@
             window.updateDbConnectionStatusUI();
           }
         }
+      },
+
+      subscribeGlobalLessons() {
+        if (!this.db) return;
+        if (this.unsubGlobalLessons) this.unsubGlobalLessons();
+        try {
+          const glCol = collection(this.db, 'global_lessons');
+          this.unsubGlobalLessons = onSnapshot(
+            glCol,
+            (snapshot) => {
+              const globalList = [];
+              snapshot.forEach((docSnap) => {
+                globalList.push({ ...docSnap.data(), id: docSnap.id, isGlobal: true });
+              });
+              if (typeof window.mergeGlobalLessonsFromCloud === 'function') {
+                window.mergeGlobalLessonsFromCloud(globalList);
+              }
+            },
+            (err) => console.warn('Global lessons snapshot warning:', err)
+          );
+        } catch (e) {}
+      },
+
+      async saveGlobalLesson(lessonObj) {
+        if (!this.db || !lessonObj?.id) return;
+        const ref = doc(this.db, 'global_lessons', lessonObj.id);
+        await setDoc(ref, { ...lessonObj, isGlobal: true, updatedAt: new Date().toISOString() }, { merge: true });
+      },
+
+      async deleteGlobalLesson(lessonId) {
+        if (!this.db || !lessonId) return;
+        const ref = doc(this.db, 'global_lessons', lessonId);
+        await deleteDoc(ref);
+      },
+
+      async fetchAdminOverview() {
+        if (!this.db) return { users: [], classes: [], logs: [], globalLessons: [] };
+        const [usersSnap, classesSnap, logsSnap, glSnap] = await Promise.all([
+          getDocs(collection(this.db, 'users')),
+          getDocs(collection(this.db, 'classes')),
+          getDocs(collection(this.db, 'student_logs')),
+          getDocs(collection(this.db, 'global_lessons'))
+        ]);
+
+        const users = [];
+        usersSnap.forEach((d) => users.push({ id: d.id, ...d.data() }));
+
+        const classes = [];
+        classesSnap.forEach((d) => classes.push({ id: d.id, ...d.data() }));
+
+        const logs = [];
+        logsSnap.forEach((d) => logs.push({ id: d.id, ...d.data() }));
+
+        const globalLessons = [];
+        glSnap.forEach((d) => globalLessons.push({ id: d.id, ...d.data(), isGlobal: true }));
+
+        return { users, classes, logs, globalLessons };
+      },
+
+      async saveCustomLessons(uid, lessonsList) {
+        if (!this.db || !uid) return;
+        const ref = doc(this.db, 'users', uid);
+        await setDoc(ref, { customLessons: lessonsList, updatedAt: new Date().toISOString() }, { merge: true });
       },
 
       subscribeClasses() {
@@ -1368,10 +1666,10 @@
         return snap.exists() ? snap.data() : null;
       },
 
-      async saveCustomLessons(uid, lessonsArray) {
-        if (!this.db || !uid) return;
-        const ref = doc(this.db, 'users', uid);
-        await setDoc(ref, { customLessons: lessonsArray, updatedAt: new Date().toISOString() }, { merge: true });
+      async createClassDoc(classObj) {
+        if (!this.db || !classObj?.code) return;
+        const ref = doc(this.db, 'classes', classObj.code);
+        await setDoc(ref, classObj, { merge: true });
       },
 
       async saveClassDoc(classObj) {
@@ -1461,6 +1759,16 @@
      * =========================================================================
      */
     const STORAGE_KEY = 'bichye_mn_github_v1';
+    const ADMIN_EMAILS = ['narankhuu.bdl@gmail.com'];
+
+    function isAdminEmail(email) {
+      if (!email || typeof email !== 'string') return false;
+      return ADMIN_EMAILS.includes(email.trim().toLowerCase());
+    }
+
+    function isCurrentUserAdmin() {
+      return Boolean(appState.teacherProfile && isAdminEmail(appState.teacherProfile.email));
+    }
 
     const DEFAULT_LESSONS = [
       {
@@ -1703,6 +2011,9 @@
       rainHighScore: 0,
       teacherProfile: null,
       teacherSubTab: 'classes',
+      adminSubTab: 'stats',
+      globalLessons: [],
+      allUsersAdmin: [],
       classes: [],
       studentLogs: [],
       activeClassCode: null,
@@ -1791,6 +2102,7 @@
 
     function showToast(message, type = 'info') {
       const container = document.getElementById('toastContainer');
+      if (!container) return;
       const toast = document.createElement('div');
       const bgClass =
         type === 'success'
@@ -1883,6 +2195,13 @@
         if (!appState.teacherProfile) {
           openTeacherAuthModal('login');
         }
+      } else if (tabId === 'admin') {
+        if (!isCurrentUserAdmin()) {
+          showToast('🔒 Зөвхөн Админ эрхтэй хэрэглэгч хандах боломжтой!', 'error');
+          switchTab('lessons');
+          return;
+        }
+        renderAdminDashboard();
       }
     }
 
@@ -2947,17 +3266,31 @@
 
     function updateTeacherHeaderUI() {
       const area = document.getElementById('teacherHeaderAuthArea');
+      const desktopAdminBtn = document.getElementById('desktopAdminNavBtn');
+      const mobileAdminBtn = document.getElementById('mobileAdminNavBtn');
+      const isAdmin = isCurrentUserAdmin();
+
+      if (desktopAdminBtn) desktopAdminBtn.classList.toggle('hidden', !isAdmin);
+      if (mobileAdminBtn) mobileAdminBtn.classList.toggle('hidden', !isAdmin);
+
       if (!area) return;
 
       if (appState.teacherProfile) {
         const tp = appState.teacherProfile;
+        const adminBadgeHtml = isAdmin
+          ? `<span class="px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 text-[9px] font-black tracking-wide">🛡️ АДМИН</span>`
+          : '';
+
         area.innerHTML = `
           <div class="flex items-center gap-1.5 bg-indigo-50 dark:bg-indigo-950/80 border border-indigo-200 dark:border-indigo-800 px-2.5 py-1 rounded-xl">
-            <button onclick="switchTab('teacher')" class="flex items-center gap-1.5 text-left" title="Багшийн самбар нээх">
-              <span class="text-sm">👩‍🏫</span>
+            <button onclick="switchTab('${isAdmin ? 'admin' : 'teacher'}')" class="flex items-center gap-1.5 text-left" title="Удирдлагын самбар нээх">
+              <span class="text-sm">${isAdmin ? '🛡️' : '👩‍🏫'}</span>
               <div class="leading-tight">
-                <div class="text-[11px] font-extrabold text-indigo-900 dark:text-indigo-200 max-w-[110px] truncate">${escapeHtml(tp.name)}</div>
-                <div class="hidden sm:block text-[9px] font-semibold text-indigo-600 dark:text-indigo-400 max-w-[110px] truncate">${escapeHtml(tp.school || 'Багш')}</div>
+                <div class="flex items-center gap-1">
+                  <span class="text-[11px] font-extrabold text-indigo-900 dark:text-indigo-200 max-w-[110px] truncate">${escapeHtml(tp.name)}</span>
+                  ${adminBadgeHtml}
+                </div>
+                <div class="hidden sm:block text-[9px] font-semibold text-indigo-600 dark:text-indigo-400 max-w-[120px] truncate">${escapeHtml(tp.email || tp.school || 'Багш')}</div>
               </div>
             </button>
             <button onclick="logoutTeacher()" class="ml-1 px-2 py-1 rounded-lg text-[10px] font-extrabold bg-white dark:bg-slate-900 hover:bg-rose-50 dark:hover:bg-rose-950 text-rose-600 dark:text-rose-400 border border-slate-200 dark:border-slate-700 transition-colors" title="Гарах">
@@ -2969,7 +3302,7 @@
         area.innerHTML = `
           <button onclick="openTeacherAuthModal('login')" class="px-3 py-1.5 rounded-xl text-xs font-extrabold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-500/20 transition-all flex items-center gap-1.5">
             <span>👩‍🏫</span>
-            <span>Багш нэвтрэх</span>
+            <span>Багш / Админ нэвтрэх</span>
           </button>
         `;
       }
@@ -3062,15 +3395,18 @@
         let user;
         if (currentTeacherAuthMode === 'register') {
           if (!regName) {
-            showToast('⚠️ Багшийн овог, нэрийг оруулна уу!', 'error');
+            showToast('⚠️ Овог, нэрээ оруулна уу!', 'error');
             return;
           }
           user = await window.firebaseBridge.emailRegister(email, password, regName);
+          const userEmail = user.email || email;
+          const adminFlag = isAdminEmail(userEmail);
           const profileObj = {
             uid: user.uid,
             name: regName,
             school: regSchool,
-            email: user.email || email,
+            email: userEmail,
+            role: adminFlag ? 'admin' : 'teacher',
             mode: 'firebase'
           };
           await window.firebaseBridge.saveTeacherProfile(user.uid, profileObj);
@@ -3087,10 +3423,19 @@
         saveState();
         updateTeacherHeaderUI();
         closeTeacherAuthModal();
-        switchTab('teacher');
-        showToast('👩‍🏫 Амжилттай нэвтэрлээ!', 'success');
+        if (isCurrentUserAdmin()) {
+          switchTab('admin');
+          showToast('🛡️ Супер Админ эрхээр амжилттай нэвтэрлээ!', 'success');
+        } else {
+          switchTab('teacher');
+          showToast('👩‍🏫 Амжилттай нэвтэрлээ!', 'success');
+        }
       } catch (err) {
-        showToast(`❌ Нэвтрэхэд алдаа гарлаа: ${err.message}`, 'error');
+        if (err?.code === 'auth/invalid-credential' || err?.code === 'auth/user-not-found') {
+          showToast('⚠️ Энэ и-мэйл бүртгэлгүй байна. Дээд талын "Бүртгүүлэх" таб эсвэл "Google бүртгэлээр нэвтрэх"-ийг ашиглана уу!', 'error');
+        } else {
+          showToast(`❌ Нэвтрэхэд алдаа гарлаа: ${err.message}`, 'error');
+        }
       }
     }
 
@@ -3103,8 +3448,13 @@
         const user = await window.firebaseBridge.googleLogin();
         await window.onFirebaseTeacherSignedIn(user);
         closeTeacherAuthModal();
-        switchTab('teacher');
-        showToast('👩‍🏫 Google бүртгэлээр амжилттай нэвтэрлээ!', 'success');
+        if (isCurrentUserAdmin()) {
+          switchTab('admin');
+          showToast('🛡️ Супер Админ эрхээр амжилттай нэвтэрлээ!', 'success');
+        } else {
+          switchTab('teacher');
+          showToast('👩‍🏫 Google бүртгэлээр амжилттай нэвтэрлээ!', 'success');
+        }
       } catch (err) {
         showToast(`❌ Google нэвтрэлт: ${err.message}`, 'error');
       }
@@ -3113,16 +3463,18 @@
     window.onFirebaseTeacherSignedIn = async function (user) {
       if (!user || user.isAnonymous) return;
       const savedData = await window.firebaseBridge.loadTeacherData(user.uid);
-      const profileObj = savedData?.profile || {
+      const userEmail = user.email || savedData?.profile?.email || '';
+      const adminFlag = isAdminEmail(userEmail);
+
+      const profileObj = {
         uid: user.uid,
-        name: user.displayName || user.email?.split('@')[0] || 'Багш',
-        school: 'ЕБС',
-        email: user.email || '',
+        name: savedData?.profile?.name || user.displayName || userEmail.split('@')[0] || 'Багш',
+        school: savedData?.profile?.school || 'ЕБС',
+        email: userEmail,
+        role: adminFlag ? 'admin' : 'teacher',
         mode: 'firebase'
       };
-      if (!savedData?.profile) {
-        await window.firebaseBridge.saveTeacherProfile(user.uid, profileObj);
-      }
+      await window.firebaseBridge.saveTeacherProfile(user.uid, profileObj);
 
       if (Array.isArray(savedData?.customLessons) && savedData.customLessons.length > 0) {
         mergeCustomLessonsIntoState(savedData.customLessons);
@@ -3131,8 +3483,33 @@
       appState.teacherProfile = profileObj;
       saveState();
       updateTeacherHeaderUI();
-      if (appState.activeTab === 'teacher') {
+      if (appState.activeTab === 'admin' && adminFlag) {
+        renderAdminDashboard();
+      } else if (appState.activeTab === 'teacher') {
         renderTeacherStudio();
+      }
+    };
+
+    window.mergeGlobalLessonsFromCloud = function (globalList) {
+      if (!Array.isArray(globalList)) return;
+      appState.globalLessons = globalList;
+      if (globalList.length > 0) {
+        const map = new Map();
+        appState.lessons.forEach((l) => map.set(l.id, l));
+        globalList.forEach((gl) => {
+          if (gl && gl.id && gl.title && gl.text) {
+            map.set(gl.id, { ...gl, isGlobal: true });
+          }
+        });
+        appState.lessons = Array.from(map.values());
+        saveState();
+        if (appState.activeTab === 'lessons') {
+          renderLessonSelector();
+        }
+      }
+      if (appState.activeTab === 'admin') {
+        renderAdminGlobalLessonsView();
+        renderAdminStatsView();
       }
     };
 
@@ -3300,6 +3677,7 @@
         name: className,
         teacherUid: appState.teacherProfile.uid,
         teacherName: appState.teacherProfile.name,
+        teacherEmail: appState.teacherProfile.email || '',
         school: appState.teacherProfile.school || 'ЕБС',
         createdAt: nowStr,
         customLessons,
@@ -3571,6 +3949,437 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
       showToast(`📊 "${activeCls.name}" ангийн дүнгийн хүснэгт (.CSV) татагдлаа!`, 'success');
+    }
+
+    /**
+     * =========================================================================
+     * 9D. SUPER ADMIN DASHBOARD LOGIC (STATS, GLOBAL LESSONS, CLASSES, LOGS)
+     * =========================================================================
+     */
+    let pendingDeleteGlobalLessonId = null;
+    let pendingDeleteAdminClassCode = null;
+
+    function switchAdminSubTab(subTab) {
+      appState.adminSubTab = subTab;
+      saveState();
+
+      document.querySelectorAll('.asub-btn').forEach((btn) => {
+        const isSel = btn.dataset.asub === subTab;
+        if (isSel) {
+          btn.classList.add('bg-amber-400', 'text-slate-950', 'shadow-sm');
+          btn.classList.remove('bg-white/10', 'text-slate-200', 'hover:bg-white/20');
+        } else {
+          btn.classList.remove('bg-amber-400', 'text-slate-950', 'shadow-sm');
+          btn.classList.add('bg-white/10', 'text-slate-200', 'hover:bg-white/20');
+        }
+      });
+
+      ['stats', 'lessons', 'classes', 'logs'].forEach((name) => {
+        const el = document.getElementById(`adminSub-${name}`);
+        if (el) el.classList.toggle('hidden', name !== subTab);
+      });
+
+      if (subTab === 'stats') renderAdminStatsView();
+      if (subTab === 'lessons') renderAdminGlobalLessonsView();
+      if (subTab === 'classes') renderAdminAllClassesView();
+      if (subTab === 'logs') renderAdminAllLogsView();
+    }
+
+    async function refreshAdminDashboardData(showNotification = false) {
+      if (!isCurrentUserAdmin()) return;
+      if (window.firebaseBridge && window.firebaseBridge.db) {
+        try {
+          const data = await window.firebaseBridge.fetchAdminOverview();
+          appState.allUsersAdmin = data.users || [];
+          if (data.classes && data.classes.length > 0) {
+            window.mergeRemoteClasses(data.classes);
+          }
+          if (data.logs && data.logs.length > 0) {
+            window.mergeRemoteStudentLogs(data.logs);
+          }
+          if (data.globalLessons && data.globalLessons.length > 0) {
+            window.mergeGlobalLessonsFromCloud(data.globalLessons);
+          }
+          saveState();
+          if (showNotification) {
+            showToast('🔄 Админ самбарын өгөгдөл үүлэн сангаас шинэчлэгдлээ!', 'success');
+          }
+        } catch (e) {
+          console.warn('Admin fetch overview warning:', e);
+        }
+      }
+      renderAdminStatsView();
+      renderAdminGlobalLessonsView();
+      renderAdminAllClassesView();
+      renderAdminAllLogsView();
+    }
+
+    function renderAdminDashboard() {
+      if (!isCurrentUserAdmin()) return;
+      const email = appState.teacherProfile?.email || 'narankhuu.bdl@gmail.com';
+      const subEl = document.getElementById('adminHeaderEmailSubtitle');
+      if (subEl) {
+        subEl.textContent = `${email} • Платформын нэгдсэн хяналт ба удирдлага`;
+      }
+      switchAdminSubTab(appState.adminSubTab || 'stats');
+      refreshAdminDashboardData(false);
+    }
+
+    function renderAdminStatsView() {
+      const usersCount = Math.max(appState.allUsersAdmin?.length || 0, appState.teacherProfile ? 1 : 0);
+      const classesCount = appState.classes.length;
+      let totalStudents = 0;
+      appState.classes.forEach((c) => {
+        totalStudents += normalizeStudentsList(c.students).length;
+      });
+      const logsCount = (appState.studentLogs || []).length;
+      const glCount = (appState.globalLessons || []).length;
+
+      document.getElementById('adminStatUsersCount').textContent = usersCount;
+      document.getElementById('adminStatClassesCount').textContent = classesCount;
+      document.getElementById('adminStatStudentsCount').textContent = totalStudents;
+      document.getElementById('adminStatLogsCount').textContent = logsCount;
+      document.getElementById('adminStatGlobalLessonsCount').textContent = glCount;
+    }
+
+    async function publishAllDefaultLessonsToGlobal() {
+      if (!isCurrentUserAdmin()) return;
+      if (!window.firebaseBridge || !window.firebaseBridge.db) {
+        showToast('⚠️ Firebase өгөгдлийн сантай холбогдоогүй байна!', 'error');
+        return;
+      }
+      try {
+        for (const lesson of DEFAULT_LESSONS) {
+          await window.firebaseBridge.saveGlobalLesson({
+            ...lesson,
+            isGlobal: true,
+            publishedBy: appState.teacherProfile?.email || 'narankhuu.bdl@gmail.com'
+          });
+        }
+        await refreshAdminDashboardData(false);
+        showToast(`☁️ Нийт ${DEFAULT_LESSONS.length} үндсэн хичээл Firestore нийтийн санд амжилттай нийтлэгдлээ!`, 'success');
+      } catch (e) {
+        showToast(`❌ Алдаа гарлаа: ${e.message}`, 'error');
+      }
+    }
+
+    async function saveAdminGlobalLesson() {
+      if (!isCurrentUserAdmin()) return;
+      const editId = document.getElementById('adminEditGlobalLessonId').value.trim();
+      const title = document.getElementById('adminGLTitle').value.trim();
+      const lang = document.getElementById('adminGLLang').value;
+      const level = document.getElementById('adminGLLevel').value;
+      const targetWpm = Math.max(5, Math.min(150, Number(document.getElementById('adminGLTargetWpm').value) || 25));
+      const focus = document.getElementById('adminGLFocus').value.trim() || (lang === 'MN' ? 'ө, р, а, о' : 'f, j, d, k');
+      const text = document.getElementById('adminGLText').value.replace(/\s+/g, ' ').trim();
+
+      if (!title || !text) {
+        showToast('⚠️ Хичээлийн нэр болон дасгалын эх бичвэрийг оруулна уу!', 'error');
+        return;
+      }
+
+      const lessonId = editId || `global_${Date.now()}`;
+      const payload = {
+        id: lessonId,
+        title,
+        lang,
+        level,
+        focus,
+        targetWpm,
+        text,
+        isGlobal: true,
+        isCustom: false,
+        publishedBy: appState.teacherProfile?.email || 'narankhuu.bdl@gmail.com'
+      };
+
+      const idx = appState.lessons.findIndex((l) => l.id === lessonId);
+      if (idx !== -1) appState.lessons[idx] = payload;
+      else appState.lessons.push(payload);
+
+      const gIdx = (appState.globalLessons || []).findIndex((l) => l.id === lessonId);
+      if (gIdx !== -1) appState.globalLessons[gIdx] = payload;
+      else appState.globalLessons.push(payload);
+
+      saveState();
+
+      if (window.firebaseBridge && window.firebaseBridge.db) {
+        try {
+          await window.firebaseBridge.saveGlobalLesson(payload);
+        } catch (e) {
+          showToast(`⚠️ Firestore хадгалалт: ${e.message}`, 'error');
+        }
+      }
+
+      clearAdminGlobalLessonForm();
+      renderAdminGlobalLessonsView();
+      renderAdminStatsView();
+      showToast('🌍 Нийтийн хичээл амжилттай хадгалагдаж бүх хэрэглэгчдэд нээлттэй боллоо!', 'success');
+    }
+
+    function editAdminGlobalLesson(id) {
+      const lesson = (appState.globalLessons || []).find((l) => l.id === id) || appState.lessons.find((l) => l.id === id);
+      if (!lesson) return;
+      document.getElementById('adminEditGlobalLessonId').value = lesson.id;
+      document.getElementById('adminGLTitle').value = lesson.title;
+      document.getElementById('adminGLLang').value = lesson.lang;
+      document.getElementById('adminGLLevel').value = lesson.level || 'Дунд';
+      document.getElementById('adminGLTargetWpm').value = lesson.targetWpm || 25;
+      document.getElementById('adminGLFocus').value = lesson.focus || '';
+      document.getElementById('adminGLText').value = lesson.text;
+      document.getElementById('adminCancelEditGLBtn').classList.remove('hidden');
+      document.getElementById('adminGlobalLessonFormHeading').textContent = `✏️ Нийтийн хичээл засах: ${lesson.title}`;
+    }
+
+    function clearAdminGlobalLessonForm() {
+      document.getElementById('adminEditGlobalLessonId').value = '';
+      document.getElementById('adminGLTitle').value = '';
+      document.getElementById('adminGLFocus').value = '';
+      document.getElementById('adminGLTargetWpm').value = '25';
+      document.getElementById('adminGLText').value = '';
+      document.getElementById('adminCancelEditGLBtn').classList.add('hidden');
+      document.getElementById('adminGlobalLessonFormHeading').textContent = '🌍 Нийтийн хичээл нэмэх / засах (Бүх хэрэглэгчдэд харагдана)';
+    }
+
+    async function deleteAdminGlobalLesson(id) {
+      if (pendingDeleteGlobalLessonId === id) {
+        appState.globalLessons = (appState.globalLessons || []).filter((l) => l.id !== id);
+        appState.lessons = appState.lessons.filter((l) => l.id !== id);
+        pendingDeleteGlobalLessonId = null;
+        saveState();
+
+        if (window.firebaseBridge && window.firebaseBridge.db) {
+          try {
+            await window.firebaseBridge.deleteGlobalLesson(id);
+          } catch (e) {}
+        }
+
+        renderAdminGlobalLessonsView();
+        renderAdminStatsView();
+        showToast('🗑️ Нийтийн хичээл устгагдлаа');
+      } else {
+        pendingDeleteGlobalLessonId = id;
+        renderAdminGlobalLessonsView();
+        setTimeout(() => {
+          if (pendingDeleteGlobalLessonId === id) {
+            pendingDeleteGlobalLessonId = null;
+            renderAdminGlobalLessonsView();
+          }
+        }, 3500);
+      }
+    }
+
+    function renderAdminGlobalLessonsView() {
+      const container = document.getElementById('adminGlobalLessonsListContainer');
+      const countEl = document.getElementById('adminGlobalLessonsListCount');
+      if (!container) return;
+
+      const list = appState.globalLessons || [];
+      if (countEl) countEl.textContent = list.length;
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center text-xs sm:text-sm text-slate-500">
+            Одоогоор үүлэн <code class="font-mono text-indigo-600">global_lessons</code> санд нийтлэгдсэн хичээл алга. Дээрх <strong>"☁️ Бүх үндсэн хичээлийг үүлэн санд нийтлэх"</strong> товчийг дарж шууд нийтлэх эсвэл шинээр нэмнэ үү.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list
+        .map((lesson) => {
+          const isDel = pendingDeleteGlobalLessonId === lesson.id;
+          return `
+            <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="space-y-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded text-[11px] font-extrabold bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">${escapeHtml(lesson.lang)}</span>
+                  <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${escapeHtml(lesson.level || 'Дунд')}</span>
+                  <span class="text-xs font-mono text-slate-500">${lesson.targetWpm || 25} WPM</span>
+                </div>
+                <div class="font-extrabold text-sm text-slate-900 dark:text-white">${escapeHtml(lesson.title)}</div>
+                <div class="font-mono text-xs text-slate-500 truncate">${escapeHtml(lesson.text)}</div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                <button onclick="editAdminGlobalLesson('${escapeHtml(lesson.id)}')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                  ✏️ Засах
+                </button>
+                <button onclick="deleteAdminGlobalLesson('${escapeHtml(lesson.id)}')" class="px-3 py-1.5 rounded-xl text-xs font-bold ${
+                  isDel ? 'bg-rose-600 text-white' : 'bg-rose-50 hover:bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800'
+                }">
+                  ${isDel ? 'Устгах уу?' : '🗑️'}
+                </button>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    function renderAdminAllClassesView() {
+      const tbody = document.getElementById('adminAllClassesTableBody');
+      if (!tbody) return;
+
+      if (appState.classes.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-sm text-slate-500">Одоогоор үүссэн анги байхгүй байна.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = appState.classes
+        .map((cls) => {
+          const studentsCount = normalizeStudentsList(cls.students).length;
+          const isDel = pendingDeleteAdminClassCode === cls.code;
+          return `
+            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
+              <td class="py-3.5 px-4 font-extrabold text-slate-900 dark:text-white">${escapeHtml(cls.name)}</td>
+              <td class="py-3.5 px-4"><span class="px-2.5 py-1 rounded-lg font-mono font-extrabold text-xs bg-indigo-600 text-white">${escapeHtml(cls.code)}</span></td>
+              <td class="py-3.5 px-4">
+                <div class="font-bold text-slate-800 dark:text-slate-200 text-xs">${escapeHtml(cls.teacherName || 'Багш')}</div>
+                <div class="text-[11px] text-slate-500">${escapeHtml(cls.school || '')} ${cls.teacherEmail ? `• ${escapeHtml(cls.teacherEmail)}` : ''}</div>
+              </td>
+              <td class="py-3.5 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">${studentsCount} сурагч</td>
+              <td class="py-3.5 px-4 text-xs text-slate-500">${escapeHtml(cls.createdAt || '')}</td>
+              <td class="py-3.5 px-4 text-right space-x-1.5">
+                <button onclick="inspectAdminClassStudents('${escapeHtml(cls.code)}')" class="px-3 py-1 rounded-lg text-xs font-bold bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                  👁️ Сурагчид
+                </button>
+                <button onclick="deleteAdminClass('${escapeHtml(cls.code)}')" class="px-3 py-1 rounded-lg text-xs font-bold ${
+                  isDel ? 'bg-rose-600 text-white' : 'bg-rose-50 hover:bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800'
+                }">
+                  ${isDel ? 'Устгах уу?' : '🗑️'}
+                </button>
+              </td>
+            </tr>
+          `;
+        })
+        .join('');
+    }
+
+    function inspectAdminClassStudents(code) {
+      const cls = appState.classes.find((c) => c.code === code);
+      if (!cls) return;
+      const students = normalizeStudentsList(cls.students);
+
+      document.getElementById('adminInspectClassTitle').textContent = `${cls.name} (${cls.code}) — Сурагчид`;
+      document.getElementById('adminInspectClassSub').textContent = `Багш: ${cls.teacherName || 'Багш'} • Нийт ${students.length} сурагч`;
+
+      const listEl = document.getElementById('adminInspectStudentsList');
+      if (students.length === 0) {
+        listEl.innerHTML = `<div class="p-6 text-center text-xs text-slate-500">Энэ ангид одоогоор сурагч нэгдээгүй байна.</div>`;
+      } else {
+        listEl.innerHTML = students
+          .sort((a, b) => (b.bestWpm || 0) - (a.bestWpm || 0))
+          .map(
+            (st, i) => `
+            <div class="p-3.5 flex items-center justify-between gap-3 bg-white dark:bg-slate-900">
+              <div>
+                <div class="text-xs font-extrabold text-slate-900 dark:text-white">${i + 1}. ${escapeHtml(st.name)}</div>
+                <div class="text-[11px] text-slate-500">Дүүргэсэн: ${st.completedLessons || 0} хичээл • Сүүлд: ${escapeHtml(st.lastActive || '')}</div>
+              </div>
+              <div class="text-right font-mono">
+                <div class="text-xs font-black text-indigo-600 dark:text-indigo-400">${st.bestWpm || 0} WPM</div>
+                <div class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">${st.avgAcc || 100}%</div>
+              </div>
+            </div>
+          `
+          )
+          .join('');
+      }
+      document.getElementById('adminClassInspectModal').classList.remove('hidden');
+    }
+
+    function closeAdminClassInspectModal() {
+      document.getElementById('adminClassInspectModal').classList.add('hidden');
+    }
+
+    async function deleteAdminClass(code) {
+      if (pendingDeleteAdminClassCode === code) {
+        appState.classes = appState.classes.filter((c) => c.code !== code);
+        pendingDeleteAdminClassCode = null;
+        saveState();
+        if (window.firebaseBridge && window.firebaseBridge.db) {
+          try {
+            await window.firebaseBridge.deleteClassDoc(code);
+          } catch (e) {}
+        }
+        renderAdminAllClassesView();
+        renderAdminStatsView();
+        showToast('🗑️ Ангийг устгалаа');
+      } else {
+        pendingDeleteAdminClassCode = code;
+        renderAdminAllClassesView();
+        setTimeout(() => {
+          if (pendingDeleteAdminClassCode === code) {
+            pendingDeleteAdminClassCode = null;
+            renderAdminAllClassesView();
+          }
+        }, 3500);
+      }
+    }
+
+    function renderAdminAllLogsView() {
+      const tbody = document.getElementById('adminAllLogsTableBody');
+      if (!tbody) return;
+
+      const queryStr = (document.getElementById('adminLogsSearchInput')?.value || '').trim().toLowerCase();
+      const sorted = [...(appState.studentLogs || [])]
+        .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+        .filter((log) => {
+          if (!queryStr) return true;
+          return (
+            (log.studentName || '').toLowerCase().includes(queryStr) ||
+            (log.classCode || '').toLowerCase().includes(queryStr) ||
+            (log.activityTitle || '').toLowerCase().includes(queryStr)
+          );
+        })
+        .slice(0, 50);
+
+      if (sorted.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-sm text-slate-500">Тохирох гүйцэтгэлийн бүртгэл олдсонгүй.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = sorted
+        .map(
+          (log) => `
+          <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
+            <td class="py-3 px-4 font-bold text-slate-900 dark:text-white">${escapeHtml(log.studentName || 'Сурагч')}</td>
+            <td class="py-3 px-4 font-mono text-xs font-extrabold text-indigo-600 dark:text-indigo-400">${escapeHtml(log.classCode || '-')}</td>
+            <td class="py-3 px-4 text-xs text-slate-700 dark:text-slate-300">${escapeHtml(log.activityTitle || 'Дасгал')}</td>
+            <td class="py-3 px-4 font-mono font-black text-indigo-600 dark:text-indigo-400">${log.wpm || 0} WPM</td>
+            <td class="py-3 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">${log.acc || 100}%</td>
+            <td class="py-3 px-4 text-xs text-slate-500">${escapeHtml(log.dateStr || '')}</td>
+          </tr>
+        `
+        )
+        .join('');
+    }
+
+    function exportAllStudentLogsCsv() {
+      const logs = [...(appState.studentLogs || [])].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+      const headers = ['Д/д', 'Сурагчийн нэр', 'Ангийн код', 'Хичээл / Сорил', 'Хэл', 'Хурд (WPM)', 'Нарийвчлал (%)', 'Алдаа', 'Огноо'];
+      const rows = logs.map((l, idx) => [
+        idx + 1,
+        `"${(l.studentName || '').replace(/"/g, '""')}"`,
+        `"${l.classCode || ''}"`,
+        `"${(l.activityTitle || '').replace(/"/g, '""')}"`,
+        l.lang || 'MN',
+        l.wpm || 0,
+        l.acc || 100,
+        l.errors || 0,
+        `"${l.dateStr || ''}"`
+      ]);
+
+      const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `bichye-all-students-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('📊 Бүх сурагчдын дүнгийн тайлан (.CSV) татагдлаа!', 'success');
     }
 
     /**
@@ -4175,17 +4984,25 @@
     }
 
     window.addEventListener('keydown', (e) => {
-      const authModalOpen = !document.getElementById('teacherAuthModal').classList.contains('hidden');
-      const joinModalOpen = !document.getElementById('studentJoinModal').classList.contains('hidden');
-      const dbModalOpen = !document.getElementById('dbConfigModal').classList.contains('hidden');
-      const detailModalOpen = !document.getElementById('studentDetailModal').classList.contains('hidden');
+      const modalIds = [
+        'teacherAuthModal',
+        'studentJoinModal',
+        'dbConfigModal',
+        'studentDetailModal',
+        'adminClassInspectModal'
+      ];
+      const anyModalOpen = modalIds.some((id) => {
+        const el = document.getElementById(id);
+        return el && !el.classList.contains('hidden');
+      });
 
-      if (authModalOpen || joinModalOpen || dbModalOpen || detailModalOpen) {
+      if (anyModalOpen) {
         if (e.key === 'Escape') {
           closeTeacherAuthModal();
           closeStudentJoinModal();
           closeDbConfigModal();
           closeStudentDetailModal();
+          closeAdminClassInspectModal();
         }
         return;
       }
